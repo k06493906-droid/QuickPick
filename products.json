@@ -1,0 +1,452 @@
+[
+  {
+    "name": "Notebook Air Lite",
+    "description": "Lightweight laptop ideal for students and professionals.",
+    "price": 42990,
+    "category": "laptops",
+    "stock": 32,
+    "rating": 4.1,
+    "reviews": 64,
+    "image": "https://images.unsplash.com/photo-1588068840519-44a6b0aab320?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "UltraBook Pro",
+    "description": "High performance laptop with 16GB RAM and 512GB SSD.",
+    "price": 69990,
+    "category": "laptops",
+    "stock": 18,
+    "rating": 4.6,
+    "reviews": 112,
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "TechMate X14",
+    "description": "Efficient office laptop for everyday tasks.",
+    "price": 38990,
+    "category": "laptops",
+    "stock": 45,
+    "rating": 4.2,
+    "reviews": 53,
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Gaming Blade",
+    "description": "Gaming laptop with NVIDIA graphics.",
+    "price": 89990,
+    "category": "laptops",
+    "stock": 13,
+    "rating": 4.7,
+    "reviews": 151,
+    "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "StudentBook M11",
+    "description": "Affordable laptop for school and college work.",
+    "price": 29990,
+    "category": "laptops",
+    "stock": 51,
+    "rating": 4.0,
+    "reviews": 46,
+    "image": "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "SilentKey Slim",
+    "description": "Slim and silent keyboard for office use.",
+    "price": 999,
+    "category": "keyboards",
+    "stock": 70,
+    "rating": 4.2,
+    "reviews": 35,
+    "image": "https://images.unsplash.com/photo-1587829191301-dc798b83add3?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Mechanical Beast",
+    "description": "RGB mechanical gaming keyboard.",
+    "price": 3599,
+    "category": "keyboards",
+    "stock": 30,
+    "rating": 4.6,
+    "reviews": 128,
+    "image": "https://images.unsplash.com/photo-1587829191537-254f2340535c?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "MiniBoard Wireless",
+    "description": "Compact wireless keyboard for students.",
+    "price": 1499,
+    "category": "keyboards",
+    "stock": 55,
+    "rating": 4.3,
+    "reviews": 64,
+    "image": "https://images.unsplash.com/photo-1595225476933-018e043e8bd4?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "ClassRoom TypePad",
+    "description": "Durable keyboard suitable for lab and classroom use.",
+    "price": 699,
+    "category": "keyboards",
+    "stock": 85,
+    "rating": 4.1,
+    "reviews": 27,
+    "image": "https://images.unsplash.com/photo-1587829191301-dc798b83add3?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Office Pro Keys",
+    "description": "Standard full-sized office keyboard.",
+    "price": 899,
+    "category": "keyboards",
+    "stock": 47,
+    "rating": 4.0,
+    "reviews": 18,
+    "image": "https://images.unsplash.com/photo-1587829191537-254f2340535c?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "SwiftMouse Wireless",
+    "description": "Lightweight wireless mouse with high precision.",
+    "price": 899,
+    "category": "mouse",
+    "stock": 66,
+    "rating": 4.3,
+    "reviews": 42,
+    "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "RGB Gamer Mouse",
+    "description": "RGB gaming mouse with 6 programmable buttons.",
+    "price": 1599,
+    "category": "mouse",
+    "stock": 41,
+    "rating": 4.7,
+    "reviews": 80,
+    "image": "https://images.unsplash.com/photo-1587829191537-254f2340535c?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Nano Travel Mouse",
+    "description": "Portable mouse ideal for travel and students.",
+    "price": 599,
+    "category": "mouse",
+    "stock": 79,
+    "rating": 4.2,
+    "reviews": 56,
+    "image": "https://images.unsplash.com/photo-1595225476933-018e043e8bd4?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Classic Office Mouse",
+    "description": "Durable optical mouse for daily use.",
+    "price": 499,
+    "category": "mouse",
+    "stock": 90,
+    "rating": 4.0,
+    "reviews": 33,
+    "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Silent Click Pro",
+    "description": "Mouse with silent clicking for libraries and labs.",
+    "price": 699,
+    "category": "mouse",
+    "stock": 72,
+    "rating": 4.1,
+    "reviews": 29,
+    "image": "https://images.unsplash.com/photo-1587829191537-254f2340535c?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "A4 Notebook Pack",
+    "description": "Set of 5 notebooks for school and college.",
+    "price": 299,
+    "category": "stationery",
+    "stock": 100,
+    "rating": 4.4,
+    "reviews": 92,
+    "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Premium Ball Pen Set",
+    "description": "10 smooth writing pens.",
+    "price": 149,
+    "category": "stationery",
+    "stock": 200,
+    "rating": 4.5,
+    "reviews": 114,
+    "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Study Highlighters",
+    "description": "Pack of highlighters for notes and textbooks.",
+    "price": 199,
+    "category": "stationery",
+    "stock": 120,
+    "rating": 4.3,
+    "reviews": 51,
+    "image": "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Geometry Set",
+    "description": "Complete geometry tools for students.",
+    "price": 99,
+    "category": "stationery",
+    "stock": 85,
+    "rating": 4.2,
+    "reviews": 29,
+    "image": "https://images.unsplash.com/photo-1516321318423-f06f70db4397?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Pocket Calculator",
+    "description": "Compact handheld calculator.",
+    "price": 249,
+    "category": "stationery",
+    "stock": 60,
+    "rating": 4.1,
+    "reviews": 43,
+    "image": "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Campus Backpack",
+    "description": "Durable backpack for college students.",
+    "price": 1199,
+    "category": "bags",
+    "stock": 58,
+    "rating": 4.5,
+    "reviews": 114,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Laptop Messenger Bag",
+    "description": "Stylish office and college laptop bag.",
+    "price": 1599,
+    "category": "bags",
+    "stock": 38,
+    "rating": 4.4,
+    "reviews": 81,
+    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Casual Daypack",
+    "description": "Lightweight bag for everyday use.",
+    "price": 899,
+    "category": "bags",
+    "stock": 64,
+    "rating": 4.2,
+    "reviews": 57,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Anti-Theft Backpack",
+    "description": "Security-focused bag with hidden zippers.",
+    "price": 1799,
+    "category": "bags",
+    "stock": 27,
+    "rating": 4.6,
+    "reviews": 92,
+    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Mini Shoulder Sling",
+    "description": "Small sling bag perfect for students.",
+    "price": 599,
+    "category": "bags",
+    "stock": 74,
+    "rating": 4.0,
+    "reviews": 26,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "USB Pendrive 32GB",
+    "description": "Compact storage device for students.",
+    "price": 399,
+    "category": "student-accessories",
+    "stock": 120,
+    "rating": 4.5,
+    "reviews": 162,
+    "image": "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Noise Cancelling Earphones",
+    "description": "Helps students focus on study videos.",
+    "price": 799,
+    "category": "student-accessories",
+    "stock": 80,
+    "rating": 4.4,
+    "reviews": 96,
+    "image": "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Laptop Cooling Pad",
+    "description": "Prevents laptop overheating during long use.",
+    "price": 899,
+    "category": "student-accessories",
+    "stock": 50,
+    "rating": 4.2,
+    "reviews": 54,
+    "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Portable Desk Lamp",
+    "description": "Rechargeable desk lamp for late study sessions.",
+    "price": 699,
+    "category": "student-accessories",
+    "stock": 62,
+    "rating": 4.3,
+    "reviews": 39,
+    "image": "https://images.unsplash.com/photo-1565636192335-14a3694ded50?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "External HDD 1TB",
+    "description": "Reliable data backup for school work.",
+    "price": 3999,
+    "category": "student-accessories",
+    "stock": 22,
+    "rating": 4.6,
+    "reviews": 110,
+    "image": "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Computer Networks",
+    "description": "A complete academic textbook for network fundamentals.",
+    "price": 499,
+    "category": "books",
+    "stock": 45,
+    "rating": 4.6,
+    "reviews": 98,
+    "image": "https://images.unsplash.com/photo-1507842217343-583f20270319?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Operating System Concepts",
+    "description": "Detailed OS theory for CS students.",
+    "price": 599,
+    "category": "books",
+    "stock": 43,
+    "rating": 4.7,
+    "reviews": 112,
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Database Management Systems",
+    "description": "A book on DBMS concepts and SQL.",
+    "price": 549,
+    "category": "books",
+    "stock": 39,
+    "rating": 4.5,
+    "reviews": 87,
+    "image": "https://images.unsplash.com/photo-1507842217343-583f20270319?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Programming in C",
+    "description": "Beginner-friendly C programming book.",
+    "price": 299,
+    "category": "books",
+    "stock": 55,
+    "rating": 4.4,
+    "reviews": 76,
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Algorithms Unlocked",
+    "description": "Learn algorithms and logic in simple language.",
+    "price": 499,
+    "category": "books",
+    "stock": 41,
+    "rating": 4.6,
+    "reviews": 104,
+    "image": "https://images.unsplash.com/photo-1507842217343-583f20270319?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Smartwatch Lite",
+    "description": "Budget smartwatch with fitness tracking.",
+    "price": 2499,
+    "category": "gadgets",
+    "stock": 46,
+    "rating": 4.5,
+    "reviews": 90,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Bluetooth Speaker",
+    "description": "Portable music speaker for students.",
+    "price": 1199,
+    "category": "gadgets",
+    "stock": 37,
+    "rating": 4.4,
+    "reviews": 74,
+    "image": "https://images.unsplash.com/photo-1589003077984-894e133814c9?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Mini Bluetooth Tracker",
+    "description": "Attach to bag or keys to prevent loss.",
+    "price": 799,
+    "category": "gadgets",
+    "stock": 55,
+    "rating": 4.2,
+    "reviews": 40,
+    "image": "https://images.unsplash.com/photo-1505228395891-9a51e7e86e81?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Wireless Power Bank",
+    "description": "Fast charging power bank for students.",
+    "price": 1499,
+    "category": "gadgets",
+    "stock": 48,
+    "rating": 4.3,
+    "reviews": 63,
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Pocket Tripod",
+    "description": "Mini tripod for lectures and video recording.",
+    "price": 499,
+    "category": "gadgets",
+    "stock": 60,
+    "rating": 4.2,
+    "reviews": 28,
+    "image": "https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Steel Water Bottle",
+    "description": "Eco-friendly bottle for daily use.",
+    "price": 299,
+    "category": "daily-essentials",
+    "stock": 120,
+    "rating": 4.6,
+    "reviews": 150,
+    "image": "https://images.unsplash.com/photo-1602143407151-7e36dd5f5eca?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Lunch Box",
+    "description": "Stainless steel tiffin for students.",
+    "price": 349,
+    "category": "daily-essentials",
+    "stock": 90,
+    "rating": 4.4,
+    "reviews": 74,
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Notebook Planner",
+    "description": "Daily planner for time management.",
+    "price": 199,
+    "category": "daily-essentials",
+    "stock": 85,
+    "rating": 4.5,
+    "reviews": 62,
+    "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Umbrella Compact",
+    "description": "Portable umbrella for students.",
+    "price": 299,
+    "category": "daily-essentials",
+    "stock": 70,
+    "rating": 4.3,
+    "reviews": 43,
+    "image": "https://images.unsplash.com/photo-1584797041525-2dd266840475?w=800&h=600&fit=crop"
+  },
+  {
+    "name": "Reusable Face Mask",
+    "description": "Washable mask for daily use.",
+    "price": 149,
+    "category": "daily-essentials",
+    "stock": 140,
+    "rating": 4.2,
+    "reviews": 50,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+  }
+]

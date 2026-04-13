@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickPick - Online Shopping</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .btn-otp {
+      background-color: #4CAF50 !important;
+      margin-top: 10px;
+    }
+    #otp-login input {
+      margin-bottom: 10px;
+    }
+    #btn-send-otp {
+      background-color: #2196F3;
+    }
+    .auth-form p {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left">
+        <div class="nav-brand" onclick="goHome()">QuickPick</div>
+      </div>
+      
+      <div class="navbar-center">
+        <div class="search-bar">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search products..." onkeypress="handleSearch(event)">
+          <div id="suggestions" class="suggestions-container"></div>
+        </div>
+      </div>
+      
+      <div class="navbar-right">
+        <ul class="nav-menu">
+          <li><a href="#" onclick="goHome()">Home</a></li>
+          <li><a href="#" onclick="goToProducts()">Products</a></li>
+          <li class="cart-link">
+            <a href="#" onclick="goToCart()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              <span class="cart-text">Cart</span>
+              <span id="cart-count" class="cart-badge">0</span>
+            </a>
+          </li>
+          <li><a href="#" onclick="viewOrderHistory()">Orders</a></li>
+          <li><a href="#" onclick="toggleAuth()" id="auth-link">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Authentication Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAuthModal()">&times;</span>
+      <div class="auth-container">
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form">
+          <h2>Login</h2>
+          <div id="password-login">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password">
+            <button onclick="handleLogin()">Login with Password</button>
+            <p>OR</p>
+            <button onclick="showOTPForm()" class="btn-otp">Login with Email (OTP)</button>
+          </div>
+          <div id="otp-login" style="display: none;">
+            <input type="email" id="otp-email" placeholder="Enter your email" required>
+            <button id="sendOtpBtn" onclick="handleSendOTP()">Send OTP</button>
+            <div id="otp-input-group" style="display: none; margin-top: 10px;">
+              <input type="text" id="login-otp" placeholder="6-digit OTP" maxlength="6">
+              <button id="verifyOtpBtn" onclick="handleVerifyOTP()">Verify OTP & Login</button>
+            </div>
+            <p><a href="#" onclick="showPasswordForm()">Back to Password Login</a></p>
+          </div>
+          <p>Don't have an account? <a href="#" onclick="toggleAuthForm()">Sign Up</a></p>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup-form" class="auth-form" style="display: none;">
+          <h2>Sign Up</h2>
+          <input type="text" id="signup-name" placeholder="Full Name" required>
+          <input type="email" id="signup-email" placeholder="Email" required>
+          <input type="password" id="signup-password" placeholder="Password" required>
+          <button onclick="handleSignup()">Sign Up</button>
+          <p>Already have an account? <a href="#" onclick="toggleAuthForm()">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>Welcome to QuickPick</h1>
+        <p>Your one-stop shop for everything you need</p>
+        <button class="btn-shop-now" onclick="goToProducts()">Shop Now</button>
+      </div>
+      <div class="hero-background"></div>
+    </section>
+
+    <!-- Category Strip -->
+    <section class="category-strip">
+      <div class="container">
+        <div class="categories-scroll">
+          <div class="category-chip" onclick="filterByCategory('laptops')">
+            <span class="category-emoji">💻</span>
+            <span>Laptops</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('keyboards')">
+            <span class="category-emoji">⌨️</span>
+            <span>Keyboards</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('mouse')">
+            <span class="category-emoji">🖱️</span>
+            <span>Mouse</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('stationery')">
+            <span class="category-emoji">📝</span>
+            <span>Stationery</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('bags')">
+            <span class="category-emoji">👜</span>
+            <span>Bags</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('books')">
+            <span class="category-emoji">📚</span>
+            <span>Books</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('gadgets')">
+            <span class="category-emoji">🎧</span>
+            <span>Gadgets</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('student-accessories')">
+            <span class="category-emoji">🎒</span>
+            <span>Accessories</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('daily-essentials')">
+            <span class="category-emoji">🛍️</span>
+            <span>Essentials</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container main-container">
+      <!-- Featured Products Section -->
+      <section id="products" class="products-section">
+        <h2>Featured Products</h2>
+        <div id="products-list" class="products-grid">
+          <!-- Products will be loaded here dynamically -->
+        </div>
+      </section>
+
+      <!-- Related Products Section -->
+      <section id="related-products" class="related-products-section" style="display: none;">
+        <h2>Related Products</h2>
+        <div class="related-products-container">
+          <div class="related-product-left">
+            <div id="related-left-product" class="related-product-card">
+              <!-- Left product will be loaded here -->
+            </div>
+          </div>
+          <div class="related-products-center">
+            <p>Browse our curated collection of related items</p>
+          </div>
+          <div class="related-product-right">
+            <div id="related-right-product" class="related-product-card">
+              <!-- Right product will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Recommendations Section -->
+      <section id="ai-recommendations" class="ai-recommendations-section" style="display: none;">
+        <div class="recommendations-header">
+          <h2>✨ AI Recommendations For You</h2>
+          <p>Based on your order history</p>
+        </div>
+        <div id="recommendations-list" class="recommendations-grid">
+          <!-- Recommendations will be loaded here dynamically -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Additional Sections (Cart, Order Summary, Order History) -->
+  <div class="container main-container">
+    <!-- Cart Section -->
+    <section id="cart" class="cart-section" style="display: none;">
+      <h2>Shopping Cart</h2>
+      <div id="cart-items" class="cart-items">
+        <!-- Cart items will be loaded here dynamically -->
+      </div>
+      <div class="cart-summary">
+        <h3>Total: ₹<span id="cart-total">0.00</span></h3>
+        <button onclick="checkout()">Checkout</button>
+      </div>
+    </section>
+
+    <!-- Order Summary Section -->
+    <section id="order-summary" class="order-summary-section" style="display: none;">
+      <h2>Order Summary</h2>
+      <div class="order-container">
+        <!-- Order Details -->
+        <div class="order-details">
+          <h3>Order Details</h3>
+          <div id="summary-items" class="summary-items">
+            <!-- Items will be displayed here -->
+          </div>
+          
+          <div class="pricing-breakdown">
+            <div class="price-row">
+              <span>Subtotal:</span>
+              <span>₹<span id="subtotal">0.00</span></span>
+            </div>
+            <div class="price-row">
+              <span>Tax (18%):</span>
+              <span>₹<span id="tax">0.00</span></span>
+            </div>
+            <div class="price-row">
+              <span>Shipping Charges:</span>
+              <span>₹<span id="shipping">0.00</span></span>
+            </div>
+            <div class="price-row total">
+              <span>Grand Total:</span>
+              <span>₹<span id="grand-total">0.00</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="checkout-form">
+          <h3>Delivery & Payment</h3>
+          
+          <div class="form-group">
+            <label for="shipping-address">Shipping Address:</label>
+            <textarea id="shipping-address" placeholder="Enter your complete address" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-method">Payment Method:</label>
+            <select id="payment-method">
+              <option value="">-- Select Payment Method --</option>
+              <option value="card">Credit/Debit Card</option>
+              <option value="upi">UPI</option>
+              <option value="bank">Bank Transfer</option>
+              <option value="wallet">Digital Wallet</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button onclick="confirmOrder()" class="btn-confirm">Confirm Order</button>
+            <button onclick="backToCart()" class="btn-back">Back to Cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Order History Section -->
+    <section id="order-history" class="order-history-section" style="display: none;">
+      <h2>Order History</h2>
+      <div id="orders-container" class="orders-container">
+        <!-- Orders will be loaded here -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>QuickPick</h3>
+          <p>Your one-stop shop for everything you need</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#" onclick="goHome()">Home</a></li>
+            <li><a href="#" onclick="goToProducts()">Products</a></li>
+            <li><a href="#" onclick="viewOrderHistory()">Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Help & FAQs</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 QuickPick. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Razorpay Checkout Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/recommendations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
