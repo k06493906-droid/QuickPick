@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const seedData = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/quickpick');
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
     // Update existing products with some tags
@@ -44,7 +44,7 @@ const seedData = async () => {
         totalAmount: products[0].price + products[1].price,
         shippingAddress: '123 Test St'
       });
-      
+
       const order2 = new Order({
         userId: user._id,
         items: [
