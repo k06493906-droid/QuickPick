@@ -1,9 +1,9 @@
 // API Helper Functions - Handle all backend API calls
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://quickpick-1gss.onrender.com';
 
 // Get stored JWT token from localStorage
-const getToken = () => localStorage.getItem('authToken');
+const getToken = () => localStorage.getItem('authToken') || localStorage.getItem('token');
 
 // Make API request
 const apiCall = async (endpoint, method = 'GET', data = null) => {
@@ -14,10 +14,9 @@ const apiCall = async (endpoint, method = 'GET', data = null) => {
 
     // Add authorization header if token exists
     const token = getToken();
-    console.log('Token from localStorage:', token);
+    console.log('Token status:', !!token);
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
-      console.log('Authorization header set:', headers['Authorization']);
     }
 
     const options = {
@@ -29,12 +28,22 @@ const apiCall = async (endpoint, method = 'GET', data = null) => {
       options.body = JSON.stringify(data);
     }
 
-    console.log('Making request to:', `${API_BASE_URL}${endpoint}`);
+    console.log('API Request:', endpoint);
+    console.log('Request Body:', data);
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await response.text();
+      console.error("Invalid response from server:", text);
+      throw new Error("Invalid response from server");
+    }
+
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.error || 'API Error');
+      throw new Error(result.message || result.error || 'API Error');
     }
 
     return result;
@@ -47,79 +56,79 @@ const apiCall = async (endpoint, method = 'GET', data = null) => {
 // Auth API Functions
 const authAPI = {
   signup: (name, email, password) =>
-    apiCall('/auth/signup', 'POST', { name, email, password }),
+    apiCall('/api/auth/signup', 'POST', { name, email, password }),
 
   login: (email, password) =>
-    apiCall('/auth/login', 'POST', { email, password }),
+    apiCall('/api/auth/login', 'POST', { email, password }),
 
-  sendOTP: (email) =>
-    apiCall('/auth/send-otp', 'POST', { email }),
+  sendOTP: (email, mode) =>
+    apiCall('/api/auth/send-otp', 'POST', { email, mode }),
 
-  verifyOTP: (email, otp) =>
-    apiCall('/auth/verify-otp', 'POST', { email, otp }),
+  verifyOTP: (data) =>
+    apiCall('/api/auth/verify-otp', 'POST', data),
 };
 
 // Product API Functions
 const productAPI = {
-  getAllProducts: () => apiCall('/products', 'GET'),
+  getAllProducts: () => apiCall('/api/products', 'GET'),
 
-  getProductById: (id) => apiCall(`/products/${id}`, 'GET'),
+  getProductById: (id) => apiCall(`/api/products/${id}`, 'GET'),
 
   createProduct: (productData) =>
-    apiCall('/products', 'POST', productData),
+    apiCall('/api/products', 'POST', productData),
 
   updateProduct: (id, productData) =>
-    apiCall(`/products/${id}`, 'PUT', productData),
+    apiCall(`/api/products/${id}`, 'PUT', productData),
 
   deleteProduct: (id) =>
-    apiCall(`/products/${id}`, 'DELETE'),
+    apiCall(`/api/products/${id}`, 'DELETE'),
 
   searchProductsSuggestions: (query) =>
-    apiCall(`/products/search?q=${query}`, 'GET'),
+    apiCall(`/api/products/search?q=${query}`, 'GET'),
 };
 
 // User API Functions
 const userAPI = {
-  getUserProfile: () => apiCall('/users/profile', 'GET'),
+  getUserProfile: () => apiCall('/api/user/profile', 'GET'),
 
   updateUserProfile: (userData) =>
-    apiCall('/users/profile', 'PUT', userData),
+    apiCall('/api/user/profile', 'PUT', userData),
 
-  getAllUsers: () => apiCall('/users', 'GET'),
+  getAllUsers: () => apiCall('/api/user', 'GET'),
 
-  deleteUser: () => apiCall('/users/profile', 'DELETE'),
+  deleteUser: () => apiCall('/api/user/profile', 'DELETE'),
 };
 
 // Cart API Functions
 const cartAPI = {
-  getCart: () => apiCall('/cart', 'GET'),
+  getCart: () => apiCall('/api/cart', 'GET'),
 
   addToCart: (productId, quantity) =>
-    apiCall('/cart/add', 'POST', { productId, quantity }),
+    apiCall('/api/cart/add', 'POST', { productId, quantity }),
 
   removeFromCart: (productId) =>
-    apiCall('/cart/remove', 'POST', { productId }),
+    apiCall('/api/cart/remove', 'POST', { productId }),
 
-  clearCart: () => apiCall('/cart/clear', 'DELETE'),
+  clearCart: () => apiCall('/api/cart/clear', 'DELETE'),
 };
 
 // Order API Functions
 const orderAPI = {
-  getUserOrders: () => apiCall('/orders', 'GET'),
+  getUserOrders: () => apiCall('/api/orders', 'GET'),
 
-  getOrderById: (id) => apiCall(`/orders/${id}`, 'GET'),
+  getOrderById: (id) => apiCall(`/api/orders/${id}`, 'GET'),
 
   createOrder: (cartItems, shippingAddress, paymentMethod, paymentId = null) =>
-    apiCall('/orders', 'POST', { items: cartItems, shippingAddress, paymentMethod, paymentId }),
+    apiCall('/api/orders', 'POST', { items: cartItems, shippingAddress, paymentMethod, paymentId }),
 
   updateOrderStatus: (id, status, paymentStatus) =>
-    apiCall(`/orders/${id}`, 'PUT', { status, paymentStatus }),
+    apiCall(`/api/orders/${id}`, 'PUT', { status, paymentStatus }),
 
-  cancelOrder: (id) => apiCall(`/orders/${id}`, 'DELETE'),
+  cancelOrder: (id) => apiCall(`/api/orders/${id}`, 'DELETE'),
 };
 
 // Payment API Functions
 const paymentAPI = {
-  createOrder: (amount) => apiCall('/payment/create-order', 'POST', { amount }),
-  verifyPayment: (paymentData) => apiCall('/payment/verify-payment', 'POST', paymentData),
+  createOrder: (amount) => apiCall('/api/payment/create-order', 'POST', { amount }),
+  verifyPayment: (paymentData) => apiCall('/api/payment/verify-payment', 'POST', paymentData),
 };

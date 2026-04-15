@@ -6,16 +6,50 @@ const loadRecommendationsOnHome = async () => {
     return;
   }
 
+  // Only load recommendations if the home page is currently visible
+  const homeSection = document.getElementById('home');
+  if (!homeSection || homeSection.style.display === 'none') {
+    return;
+  }
+
   try {
     const recommendations = await orderAPI.getRecommendations();
-    displayRecommendations(recommendations);
-    displayRelatedProducts(recommendations);
+
+    // We need 8 unique products: 4 for AI, 4 for related
+    let aiPicks = [];
+    let relatedPicks = [];
+
+    if (recommendations.length >= 8) {
+      // Enough AI recommendations — take first 4 for AI, next 4 for related
+      aiPicks = recommendations.slice(0, 4);
+      relatedPicks = recommendations.slice(4, 8);
+    } else if (recommendations.length >= 4) {
+      // Some AI recommendations — use them for AI, fill related from allProducts
+      aiPicks = recommendations.slice(0, 4);
+      const usedIds = new Set(aiPicks.map(p => p._id));
+      relatedPicks = (allProducts || [])
+        .filter(p => !usedIds.has(p._id))
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 4);
+    } else {
+      // Few AI recommendations — show what we have, fill the rest from allProducts
+      aiPicks = recommendations.slice(0, 4);
+      const usedIds = new Set(aiPicks.map(p => p._id));
+      relatedPicks = (allProducts || [])
+        .filter(p => !usedIds.has(p._id))
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 4);
+    }
+
+    if (aiPicks.length > 0) displayRecommendations(aiPicks);
+    if (relatedPicks.length >= 2) displayRelatedProducts(relatedPicks);
+
   } catch (error) {
     console.error('Failed to load recommendations:', error);
   }
 };
 
-// Display AI recommendations
+// Display AI recommendations (4 products)
 const displayRecommendations = (recommendations) => {
   const recommendationsList = document.getElementById('recommendations-list');
   const aiSection = document.getElementById('ai-recommendations');
@@ -27,78 +61,35 @@ const displayRecommendations = (recommendations) => {
   recommendationsList.innerHTML = '';
 
   recommendations.forEach((product) => {
-    const card = createRecommendationCard(product);
+    const card = createProductCard(product);
     recommendationsList.appendChild(card);
   });
 
   aiSection.style.display = 'block';
 };
 
-// Create recommendation card
-const createRecommendationCard = (product) => {
-  const card = document.createElement('div');
-  card.className = 'recommendation-card';
-
-  const rating = product.rating || 0;
-  const stars = '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
-
-  card.innerHTML = `
-    <div class="rec-product-image">${product.image ? `<img src="${product.image}" alt="${product.name}">` : '📦'}</div>
-    <div class="rec-product-info">
-      <div class="rec-product-name">${product.name}</div>
-      <div class="rec-product-category">${product.category}</div>
-      <div class="rec-product-rating">${stars}</div>
-      <div class="rec-product-price">₹${product.price.toFixed(2)}</div>
-      <div class="rec-product-actions">
-        <button class="btn-add-to-rec-cart" onclick="addProductToCart('${product._id}', '${product.name}', ${product.price})">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  `;
-
-  return card;
-};
-
-// Display related products on left and right
-const displayRelatedProducts = (recommendations) => {
+// Display related products (4 different products)
+const displayRelatedProducts = (products) => {
   const relatedSection = document.getElementById('related-products');
-  const leftProduct = document.getElementById('related-left-product');
-  const rightProduct = document.getElementById('related-right-product');
+  const relatedGrid = document.getElementById('related-products-grid');
 
-  if (!recommendations || recommendations.length < 2) {
+  if (!products || products.length < 2 || !relatedGrid) {
     return;
   }
 
-  if (recommendations.length >= 1 && leftProduct) {
-    leftProduct.innerHTML = createRelatedProductHTML(recommendations[0]);
-  }
+  relatedGrid.innerHTML = '';
 
-  if (recommendations.length >= 2 && rightProduct) {
-    rightProduct.innerHTML = createRelatedProductHTML(recommendations[1]);
-  }
+  products.slice(0, 4).forEach((product) => {
+    const card = createProductCard(product);
+    relatedGrid.appendChild(card);
+  });
 
   relatedSection.style.display = 'block';
 };
 
-// Create related product HTML
-const createRelatedProductHTML = (product) => {
-  return `
-    <div class="related-product-image">${product.image ? `<img src="${product.image}" alt="${product.name}">` : '📦'}</div>
-    <div class="related-product-details">
-      <h3>${product.name}</h3>
-      <p class="related-category">${product.category}</p>
-      <p class="related-price">₹${product.price.toFixed(2)}</p>
-      <button class="btn-view-related" onclick="addProductToCart('${product._id}', '${product.name}', ${product.price})">
-        Add to Cart
-      </button>
-    </div>
-  `;
-};
-
 // Add recommendations API function
 const orderAPI_extended = {
-  getRecommendations: () => apiCall('/products/recommendations/ai', 'GET'),
+  getRecommendations: () => apiCall('/api/products/recommendations/ai', 'GET'),
 };
 
 // Extend orderAPI with recommendations

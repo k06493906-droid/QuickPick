@@ -3,99 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complete Profile - QuickPick</title>
+  <title>Complete Profile — QuickPick</title>
+  <meta name="description" content="Complete your QuickPick profile to get personalized recommendations and faster checkout.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .profile-container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .profile-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    .btn-submit {
-      width: 100%;
-      padding: 12px;
-      background-color: #ff3e6c;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn-submit:hover {
-      background-color: #e63560;
-    }
-  </style>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
-    <div class="navbar-container">
-      <div class="nav-brand">QuickPick</div>
+    <div class="navbar-container" style="display:flex; justify-content:center;">
+      <div class="nav-brand" onclick="window.location.href='index.html'" style="cursor:pointer;">
+        <span class="brand-icon">⚡</span>Quick<span class="brand-accent">Pick</span>
+      </div>
     </div>
   </nav>
 
   <div class="container">
-    <div class="profile-container">
-      <h2>Complete Your Profile</h2>
-      <p style="text-align: center; color: #666; margin-bottom: 20px;">Please provide some additional details to enhance your experience.</p>
-      
-      <form id="profile-form">
-        <div class="form-group">
-          <label for="profile-name">Full Name</label>
-          <input type="text" id="profile-name" placeholder="Enter your full name" required>
+    <div class="profile-page">
+      <!-- Profile Photo Section -->
+      <div class="profile-photo-section">
+        <div class="profile-photo-wrapper" id="photo-preview-wrapper">
+          <img id="photo-preview" src="" alt="Profile Photo" style="display:none;">
+          <span id="photo-placeholder" class="photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
         </div>
-        
-        <div class="form-group">
-          <label for="profile-photo">Profile Photo URL</label>
-          <input type="url" id="profile-photo" placeholder="https://example.com/photo.jpg">
+        <label for="profile-photo" class="photo-upload-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Change Photo
+        </label>
+      </div>
+
+      <!-- Profile Form -->
+      <div class="profile-card">
+        <div class="profile-card-header">
+          <span class="profile-header-icon">👤</span>
+          <div>
+            <h2>Complete Your Profile</h2>
+            <p>Add your details for a personalized experience</p>
+          </div>
         </div>
-        
-        <div class="form-group">
-          <label for="profile-college">College / University</label>
-          <input type="text" id="profile-college" placeholder="Enter your college name">
-        </div>
-        
-        <div class="form-group">
-          <label for="profile-course">Course / Degree</label>
-          <input type="text" id="profile-course" placeholder="e.g. B.Tech, MBA">
-        </div>
-        
-        <div class="form-group">
-          <label for="profile-location">Location (City)</label>
-          <input type="text" id="profile-location" placeholder="e.g. New Delhi">
-        </div>
-        
-        <div class="form-group">
-          <label for="profile-pincode">Pincode</label>
-          <input type="text" id="profile-pincode" placeholder="6-digit pincode" maxlength="6">
-        </div>
-        
-        <button type="submit" class="btn-submit">Save Profile</button>
-      </form>
+
+        <form id="profile-form">
+          <div class="profile-form-grid">
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="profile-name" placeholder="Full Name" required>
+            </div>
+
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <input type="url" id="profile-photo" placeholder="Profile Photo URL (https://...)" oninput="previewPhoto(this.value)">
+            </div>
+
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg>
+              <input type="text" id="profile-college" placeholder="College / University">
+            </div>
+
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <input type="text" id="profile-course" placeholder="Course / Degree (e.g. B.Tech, MBA)">
+            </div>
+
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input type="text" id="profile-location" placeholder="City (e.g. New Delhi)">
+            </div>
+
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <input type="text" id="profile-pincode" placeholder="Pincode (6 digits)" maxlength="6">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-profile-save">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save Profile
+          </button>
+        </form>
+      </div>
+
+      <a href="index.html" class="skip-link">← Skip for now and go to shopping</a>
     </div>
   </div>
 
@@ -109,6 +100,30 @@
 
     const user = getCurrentUser();
     document.getElementById('profile-name').value = user.name || '';
+    
+    // Pre-fill photo if exists
+    if (user.photo) {
+      previewPhoto(user.photo);
+      document.getElementById('profile-photo').value = user.photo;
+    }
+
+    // Photo preview function
+    function previewPhoto(url) {
+      const preview = document.getElementById('photo-preview');
+      const placeholder = document.getElementById('photo-placeholder');
+      if (url && url.startsWith('http')) {
+        preview.src = url;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+        preview.onerror = () => {
+          preview.style.display = 'none';
+          placeholder.style.display = 'flex';
+        };
+      } else {
+        preview.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+    }
 
     // Handle form submission
     document.getElementById('profile-form').addEventListener('submit', async (e) => {

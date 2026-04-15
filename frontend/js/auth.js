@@ -89,8 +89,8 @@ const handleAuthSuccess = (response) => {
   // Clear login form
   if (document.getElementById('login-email')) document.getElementById('login-email').value = '';
   if (document.getElementById('login-password')) document.getElementById('login-password').value = '';
-  if (document.getElementById('otp-email')) document.getElementById('otp-email').value = '';
-  if (document.getElementById('login-otp')) document.getElementById('login-otp').value = '';
+  if (document.getElementById('email')) document.getElementById('email').value = '';
+  if (document.getElementById('otp')) document.getElementById('otp').value = '';
 
   // Update UI
   updateAuthUI();
@@ -118,14 +118,14 @@ const showPasswordForm = () => {
 // Handle Sending OTP
 const handleSendOTP = async () => {
   try {
-    const email = document.getElementById('otp-email').value;
+    const email = document.getElementById('email').value;
     if (!email) {
       alert('Please enter your email');
       return;
     }
 
     console.log("Attempting to send OTP to:", email);
-    const response = await authAPI.sendOTP(email);
+    const response = await authAPI.sendOTP(email, 'login');
     alert(response.message || 'OTP sent successfully!');
     
     // Show OTP input field
@@ -140,8 +140,8 @@ const handleSendOTP = async () => {
 // Handle Verifying OTP
 const handleVerifyOTP = async () => {
   try {
-    const email = document.getElementById('otp-email').value;
-    const otp = document.getElementById('login-otp').value;
+    const email = document.getElementById('email').value;
+    const otp = document.getElementById('otp').value;
 
     if (!email || !otp) {
       alert('Please enter email and OTP');
@@ -149,12 +149,11 @@ const handleVerifyOTP = async () => {
     }
 
     console.log("Attempting to verify OTP:", { email, otp });
-    const response = await authAPI.verifyOTP(email, otp);
+    const response = await authAPI.verifyOTP({ email, otp });
     
     // For consistency with project structure, store token and user
     if (response.token) {
-      localStorage.setItem("authToken", response.token);
-      localStorage.setItem("token", response.token); // Add "token" for requested fix compatibility
+      localStorage.setItem("token", response.token);
       handleAuthSuccess(response);
     } else {
       alert(response.message || "OTP verification failed");
@@ -164,6 +163,100 @@ const handleVerifyOTP = async () => {
     alert('Verification failed: ' + error.message);
   }
 };
+
+// ==================== GOOGLE OTP FLOW ====================
+
+// Show Google OTP form (hide other panels)
+const showGoogleOTPForm = (mode) => {
+  if (mode === 'login') {
+    document.getElementById('password-login').style.display = 'none';
+    document.getElementById('otp-login').style.display = 'none';
+    document.getElementById('google-otp-login').style.display = 'block';
+  } else {
+    document.getElementById('signup-fields').style.display = 'none';
+    document.getElementById('google-otp-signup').style.display = 'block';
+  }
+};
+
+// Hide Google OTP form (show original panels)
+const hideGoogleOTPForm = (mode) => {
+  if (mode === 'login') {
+    document.getElementById('google-otp-login').style.display = 'none';
+    document.getElementById('password-login').style.display = 'block';
+    // Reset google OTP state
+    document.getElementById('google-otp-verify-login').style.display = 'none';
+    document.getElementById('google-email-login').value = '';
+    if (document.getElementById('google-otp-code-login')) document.getElementById('google-otp-code-login').value = '';
+  } else {
+    document.getElementById('google-otp-signup').style.display = 'none';
+    document.getElementById('signup-fields').style.display = 'block';
+    // Reset google OTP state
+    document.getElementById('google-otp-verify-signup').style.display = 'none';
+    document.getElementById('google-email-signup').value = '';
+    if (document.getElementById('google-otp-code-signup')) document.getElementById('google-otp-code-signup').value = '';
+  }
+};
+
+// Send OTP to Google email
+const handleGoogleSendOTP = async (mode) => {
+  try {
+    const emailId = mode === 'login' ? 'google-email-login' : 'google-email-signup';
+    const email = document.getElementById(emailId).value.trim();
+    
+    if (!email) {
+      alert('Please enter your Gmail address');
+      return;
+    }
+
+    // Validate it's a gmail address
+    if (!email.toLowerCase().endsWith('@gmail.com')) {
+      alert('Please enter a valid Gmail address (ending with @gmail.com)');
+      return;
+    }
+
+    const sendMode = mode === 'login' ? 'login' : 'signup';
+    console.log("Sending Google OTP to:", email, "mode:", sendMode);
+    const response = await authAPI.sendOTP(email, sendMode);
+    alert(response.message || 'Verification code sent to your Gmail!');
+    
+    // Show OTP input field
+    const verifyId = mode === 'login' ? 'google-otp-verify-login' : 'google-otp-verify-signup';
+    document.getElementById(verifyId).style.display = 'block';
+  } catch (error) {
+    console.error("Google OTP send error:", error);
+    alert('Failed to send code: ' + error.message);
+  }
+};
+
+// Verify Google OTP and login/signup
+const handleGoogleVerifyOTP = async (mode) => {
+  try {
+    const emailId = mode === 'login' ? 'google-email-login' : 'google-email-signup';
+    const otpId = mode === 'login' ? 'google-otp-code-login' : 'google-otp-code-signup';
+    const email = document.getElementById(emailId).value.trim();
+    const otp = document.getElementById(otpId).value.trim();
+
+    if (!email || !otp) {
+      alert('Please enter your Gmail and verification code');
+      return;
+    }
+
+    console.log("Verifying Google OTP:", { email, otp });
+    const response = await authAPI.verifyOTP({ email, otp });
+    
+    if (response.token) {
+      localStorage.setItem("token", response.token);
+      handleAuthSuccess(response);
+    } else {
+      alert(response.message || "Verification failed");
+    }
+  } catch (error) {
+    console.error("Google OTP verification error:", error);
+    alert('Verification failed: ' + error.message);
+  }
+};
+
+// ==================== END GOOGLE OTP ====================
 
 // Handle user logout
 const handleLogout = () => {
@@ -178,15 +271,72 @@ const handleLogout = () => {
 // Update UI based on authentication status
 const updateAuthUI = () => {
   const authLink = document.getElementById('auth-link');
-  if (authLink) {
-    if (isAuthenticated()) {
-      const user = getCurrentUser();
-      authLink.textContent = `Logout (${user.name})`;
-    } else {
-      authLink.textContent = 'Login';
+  const profileWidget = document.getElementById('profile-widget');
+  
+  if (isAuthenticated()) {
+    const user = getCurrentUser();
+    
+    // Update auth link
+    if (authLink) {
+      authLink.textContent = 'Logout';
+      authLink.classList.remove('auth-btn');
+      authLink.classList.add('auth-btn-logout');
     }
+    
+    // Show profile widget
+    if (profileWidget) {
+      profileWidget.style.display = 'flex';
+      
+      // Set avatar
+      const avatarImg = document.getElementById('avatar-img');
+      const avatarInitials = document.getElementById('avatar-initials');
+      const dropdownAvatarImg = document.getElementById('dropdown-avatar-img');
+      const dropdownAvatarInitials = document.getElementById('dropdown-avatar-initials');
+      const dropdownName = document.getElementById('dropdown-user-name');
+      const dropdownEmail = document.getElementById('dropdown-user-email');
+      
+      if (user.photo) {
+        if (avatarImg) { avatarImg.src = user.photo; avatarImg.style.display = 'block'; }
+        if (avatarInitials) avatarInitials.style.display = 'none';
+        if (dropdownAvatarImg) { dropdownAvatarImg.src = user.photo; dropdownAvatarImg.style.display = 'block'; }
+        if (dropdownAvatarInitials) dropdownAvatarInitials.style.display = 'none';
+      } else {
+        const initials = (user.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        if (avatarImg) avatarImg.style.display = 'none';
+        if (avatarInitials) { avatarInitials.textContent = initials; avatarInitials.style.display = 'flex'; }
+        if (dropdownAvatarImg) dropdownAvatarImg.style.display = 'none';
+        if (dropdownAvatarInitials) { dropdownAvatarInitials.textContent = initials; dropdownAvatarInitials.style.display = 'flex'; }
+      }
+      
+      if (dropdownName) dropdownName.textContent = user.name || 'User';
+      if (dropdownEmail) dropdownEmail.textContent = user.email || '';
+    }
+  } else {
+    if (authLink) {
+      authLink.textContent = 'Login';
+      authLink.classList.add('auth-btn');
+      authLink.classList.remove('auth-btn-logout');
+    }
+    if (profileWidget) profileWidget.style.display = 'none';
   }
 };
+
+// Update UI on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateAuthUI();
+  
+  // FIX 1: FRONTEND OTP BUTTON NOT WORKING - Add event listener
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  if (sendOtpBtn) {
+    sendOtpBtn.addEventListener("click", handleSendOTP);
+  }
+
+  // FIX 2: VERIFY OTP BUTTON - Add event listener for OTP verification
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  if (verifyOtpBtn) {
+    verifyOtpBtn.addEventListener("click", handleVerifyOTP);
+  }
+});
 
 // Close modal when clicking outside
 window.onclick = (event) => {

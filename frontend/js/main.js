@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize application
 const initializeApp = async () => {
-  loadProducts();
+  await loadProducts();
   updateAuthUI();
   updateCartCount();
   goHome();
@@ -20,6 +20,23 @@ const initializeApp = async () => {
   
   console.log('QuickPick application initialized successfully');
 };
+
+// Toggle Profile Dropdown Menu
+const toggleProfileDropdown = () => {
+  const dropdown = document.getElementById('profile-dropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('show');
+  }
+};
+
+// Close profile dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const profileWidget = document.getElementById('profile-widget');
+  const dropdown = document.getElementById('profile-dropdown');
+  if (profileWidget && dropdown && !profileWidget.contains(e.target)) {
+    dropdown.classList.remove('show');
+  }
+});
 
 // Initialize Search Suggestions logic
 const initSearchSuggestions = () => {
@@ -143,6 +160,9 @@ const navigateTo = (section) => {
     s.style.display = 'none';
   });
 
+  // Always hide recommendation sections on navigation
+  hideRecommendationSections();
+
   const categoryStrip = document.querySelector('.category-strip');
   
   const sectionElement = document.getElementById(section);
@@ -153,6 +173,14 @@ const navigateTo = (section) => {
       categoryStrip.style.display = (section === 'products') ? 'block' : 'none';
     }
   }
+};
+
+// Helper: hide AI Recommendations and Related Products
+const hideRecommendationSections = () => {
+  const aiSection = document.getElementById('ai-recommendations');
+  const relatedSection = document.getElementById('related-products');
+  if (aiSection) aiSection.style.display = 'none';
+  if (relatedSection) relatedSection.style.display = 'none';
 };
 
 // Format currency
@@ -192,6 +220,9 @@ const goToProducts = () => {
     s.style.display = 'none';
   });
   
+  // Hide recommendations on products page
+  hideRecommendationSections();
+  
   const productsSection = document.getElementById('products');
   const categoryStrip = document.querySelector('.category-strip');
   
@@ -213,6 +244,9 @@ const goToCart = () => {
   allSections.forEach((s) => {
     s.style.display = 'none';
   });
+  
+  // Hide recommendations on cart page
+  hideRecommendationSections();
   
   const cartSection = document.getElementById('cart');
   const categoryStrip = document.querySelector('.category-strip');
@@ -250,6 +284,9 @@ const filterByCategory = (category) => {
   allSections.forEach((s) => {
     s.style.display = 'none';
   });
+  
+  // Hide recommendations on category filter
+  hideRecommendationSections();
   
   const productsSection = document.getElementById('products');
   const categoryStrip = document.querySelector('.category-strip');

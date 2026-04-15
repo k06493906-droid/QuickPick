@@ -3,51 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuickPick - Online Shopping</title>
+  <title>QuickPick — Shop Smarter, Live Better</title>
+  <meta name="description" content="QuickPick is your one-stop online shop for laptops, gadgets, stationery, bags, and everyday student essentials. Shop now for the best deals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .btn-otp {
-      background-color: #4CAF50 !important;
-      margin-top: 10px;
-    }
-    #otp-login input {
-      margin-bottom: 10px;
-    }
-    #btn-send-otp {
-      background-color: #2196F3;
-    }
-    .auth-form p {
-      margin-top: 15px;
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
+
+  <!-- ============ NAVIGATION BAR ============ -->
+  <nav class="navbar" id="main-navbar">
     <div class="navbar-container">
       <div class="navbar-left">
-        <div class="nav-brand" onclick="goHome()">QuickPick</div>
+        <div class="nav-brand" onclick="goHome()">
+          <span class="brand-icon">⚡</span>Quick<span class="brand-accent">Pick</span>
+        </div>
+        <!-- User Profile Avatar (visible when logged in) -->
+        <div id="profile-widget" class="profile-widget" style="display: none;">
+          <div class="profile-avatar" onclick="toggleProfileDropdown()" id="profile-avatar">
+            <img id="avatar-img" src="" alt="" style="display:none;">
+            <span id="avatar-initials" class="avatar-initials"></span>
+          </div>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div class="dropdown-header">
+              <div class="dropdown-avatar">
+                <img id="dropdown-avatar-img" src="" alt="" style="display:none;">
+                <span id="dropdown-avatar-initials" class="avatar-initials"></span>
+              </div>
+              <div class="dropdown-user-info">
+                <span id="dropdown-user-name" class="dropdown-name">User</span>
+                <span id="dropdown-user-email" class="dropdown-email">user@email.com</span>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="profile.html" class="dropdown-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Edit Profile
+            </a>
+            <a href="#" onclick="viewOrderHistory()" class="dropdown-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              My Orders
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" onclick="handleLogout()" class="dropdown-item dropdown-item-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Logout
+            </a>
+          </div>
+        </div>
       </div>
-      
+
       <div class="navbar-center">
         <div class="search-bar">
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
-          <input type="text" id="search-input" placeholder="Search products..." onkeypress="handleSearch(event)">
+          <input type="text" id="search-input" placeholder="Search for products, brands, categories..." onkeypress="handleSearch(event)">
           <div id="suggestions" class="suggestions-container"></div>
         </div>
       </div>
-      
+
       <div class="navbar-right">
         <ul class="nav-menu">
-          <li><a href="#" onclick="goHome()">Home</a></li>
-          <li><a href="#" onclick="goToProducts()">Products</a></li>
+          <li><a href="#" onclick="goHome()" id="nav-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Home</a></li>
+          <li><a href="#" onclick="goToProducts()" id="nav-products">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Products</a></li>
           <li class="cart-link">
-            <a href="#" onclick="goToCart()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <a href="#" onclick="goToCart()" id="nav-cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -56,105 +84,228 @@
               <span id="cart-count" class="cart-badge">0</span>
             </a>
           </li>
-          <li><a href="#" onclick="viewOrderHistory()">Orders</a></li>
-          <li><a href="#" onclick="toggleAuth()" id="auth-link">Login</a></li>
+          <li><a href="#" onclick="viewOrderHistory()" id="nav-orders">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Orders</a></li>
+          <li><a href="#" onclick="toggleAuth()" id="auth-link" class="auth-btn">Login</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Authentication Modal -->
+  <!-- ============ AUTHENTICATION MODAL ============ -->
   <div id="auth-modal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeAuthModal()">&times;</span>
       <div class="auth-container">
         <!-- Login Form -->
         <div id="login-form" class="auth-form">
-          <h2>Login</h2>
+          <div class="auth-header">
+            <span class="auth-icon">👋</span>
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to your QuickPick account</p>
+          </div>
           <div id="password-login">
-            <input type="email" id="login-email" placeholder="Email" required>
-            <input type="password" id="login-password" placeholder="Password">
-            <button onclick="handleLogin()">Login with Password</button>
-            <p>OR</p>
-            <button onclick="showOTPForm()" class="btn-otp">Login with Email (OTP)</button>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="login-email" placeholder="Email address" required>
+            </div>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="login-password" placeholder="Password">
+            </div>
+            <button onclick="handleLogin()" class="btn-primary">Sign In</button>
+            <div class="divider"><span>or continue with</span></div>
+            <div class="social-auth-buttons">
+              <button onclick="showGoogleOTPForm('login')" class="btn-google">
+                <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.998 23.998 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                Continue with Google
+              </button>
+              <button onclick="showOTPForm()" class="btn-otp-alt">📧 Login with Email OTP</button>
+            </div>
+          </div>
+          <!-- Google OTP Login Flow -->
+          <div id="google-otp-login" style="display: none;">
+            <div class="google-otp-header">
+              <svg width="24" height="24" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.998 23.998 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              <span>Sign in with Google</span>
+            </div>
+            <p class="google-otp-desc">Enter your Gmail address. We'll send a verification code to confirm it's you.</p>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="google-email-login" placeholder="your.name@gmail.com" required>
+            </div>
+            <button id="googleSendOtpLoginBtn" class="btn-google-send" onclick="handleGoogleSendOTP('login')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send Verification Code
+            </button>
+            <div id="google-otp-verify-login" style="display: none; margin-top: 12px;">
+              <div class="input-group">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="text" id="google-otp-code-login" placeholder="Enter 6-digit code" maxlength="6">
+              </div>
+              <button class="btn-primary" onclick="handleGoogleVerifyOTP('login')">Verify & Sign In</button>
+            </div>
+            <p class="auth-switch"><a href="#" onclick="hideGoogleOTPForm('login')">← Back to other options</a></p>
           </div>
           <div id="otp-login" style="display: none;">
-            <input type="email" id="otp-email" placeholder="Enter your email" required>
-            <button id="sendOtpBtn" onclick="handleSendOTP()">Send OTP</button>
-            <div id="otp-input-group" style="display: none; margin-top: 10px;">
-              <input type="text" id="login-otp" placeholder="6-digit OTP" maxlength="6">
-              <button id="verifyOtpBtn" onclick="handleVerifyOTP()">Verify OTP & Login</button>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="email" placeholder="Enter your email" required>
             </div>
-            <p><a href="#" onclick="showPasswordForm()">Back to Password Login</a></p>
+            <button id="sendOtpBtn" class="btn-primary">Send OTP</button>
+            <div id="otp-input-group" style="display: none; margin-top: 12px;">
+              <div class="input-group">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="text" id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
+              </div>
+              <button id="verifyOtpBtn" class="btn-primary">Verify OTP & Login</button>
+            </div>
+            <p class="auth-switch"><a href="#" onclick="showPasswordForm()">← Back to Password Login</a></p>
           </div>
-          <p>Don't have an account? <a href="#" onclick="toggleAuthForm()">Sign Up</a></p>
+          <p class="auth-switch">Don't have an account? <a href="#" onclick="toggleAuthForm()">Create one</a></p>
         </div>
 
         <!-- Signup Form -->
         <div id="signup-form" class="auth-form" style="display: none;">
-          <h2>Sign Up</h2>
-          <input type="text" id="signup-name" placeholder="Full Name" required>
-          <input type="email" id="signup-email" placeholder="Email" required>
-          <input type="password" id="signup-password" placeholder="Password" required>
-          <button onclick="handleSignup()">Sign Up</button>
-          <p>Already have an account? <a href="#" onclick="toggleAuthForm()">Login</a></p>
+          <div class="auth-header">
+            <span class="auth-icon">🚀</span>
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join QuickPick and start shopping</p>
+          </div>
+          <div id="signup-fields">
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="signup-name" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="signup-email" placeholder="Email address" required>
+            </div>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="signup-password" placeholder="Create password" required>
+            </div>
+            <button onclick="handleSignup()" class="btn-primary">Create Account</button>
+            <div class="divider"><span>or sign up with</span></div>
+            <button onclick="showGoogleOTPForm('signup')" class="btn-google">
+              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.998 23.998 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              Sign up with Google
+            </button>
+          </div>
+          <!-- Google OTP Signup Flow -->
+          <div id="google-otp-signup" style="display: none;">
+            <div class="google-otp-header">
+              <svg width="24" height="24" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.998 23.998 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              <span>Sign up with Google</span>
+            </div>
+            <p class="google-otp-desc">Enter your Gmail address to create an account. We'll verify it with a code.</p>
+            <div class="input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="google-email-signup" placeholder="your.name@gmail.com" required>
+            </div>
+            <button class="btn-google-send" onclick="handleGoogleSendOTP('signup')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send Verification Code
+            </button>
+            <div id="google-otp-verify-signup" style="display: none; margin-top: 12px;">
+              <div class="input-group">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="text" id="google-otp-code-signup" placeholder="Enter 6-digit code" maxlength="6">
+              </div>
+              <button class="btn-primary" onclick="handleGoogleVerifyOTP('signup')">Verify & Create Account</button>
+            </div>
+            <p class="auth-switch"><a href="#" onclick="hideGoogleOTPForm('signup')">← Back to other options</a></p>
+          </div>
+          <p class="auth-switch">Already have an account? <a href="#" onclick="toggleAuthForm()">Sign in</a></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- ============ MAIN CONTENT ============ -->
   <main>
     <!-- Hero Section -->
     <section id="home" class="hero">
-      <div class="hero-content">
-        <h1>Welcome to QuickPick</h1>
-        <p>Your one-stop shop for everything you need</p>
-        <button class="btn-shop-now" onclick="goToProducts()">Shop Now</button>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">🔥 New Arrivals Just Dropped</div>
+          <h1>Shop Smarter,<br><span class="gradient-text">Live Better</span></h1>
+          <p>Discover premium tech, accessories, and everyday essentials — all in one place. Fast delivery, best prices, guaranteed quality.</p>
+          <div class="hero-actions">
+            <button class="btn-shop-now" onclick="goToProducts()">
+              <span>Explore Products</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <div class="hero-stats">
+              <div class="stat"><strong>500+</strong><span>Products</span></div>
+              <div class="stat"><strong>10K+</strong><span>Happy Customers</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-image-wrapper">
+            <img src="assets/images/hero-banner.png" alt="QuickPick Shopping">
+            <div class="hero-float hero-float-1">
+              <span>💻</span>
+              <small>Laptops</small>
+            </div>
+            <div class="hero-float hero-float-2">
+              <span>🎧</span>
+              <small>Gadgets</small>
+            </div>
+            <div class="hero-float hero-float-3">
+              <span>📚</span>
+              <small>Books</small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="hero-background"></div>
+      <!-- Animated background shapes -->
+      <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+      <div class="container">
+        <div class="trust-items">
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <div><strong>Free Shipping</strong><span>On orders over ₹500</span></div>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div><strong>Secure Payments</strong><span>100% protected</span></div>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            <div><strong>Best Deals</strong><span>Prices you'll love</span></div>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div><strong>24/7 Support</strong><span>Always here for you</span></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Category Strip -->
     <section class="category-strip">
       <div class="container">
         <div class="categories-scroll">
-          <div class="category-chip" onclick="filterByCategory('laptops')">
-            <span class="category-emoji">💻</span>
-            <span>Laptops</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('keyboards')">
-            <span class="category-emoji">⌨️</span>
-            <span>Keyboards</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('mouse')">
-            <span class="category-emoji">🖱️</span>
-            <span>Mouse</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('stationery')">
-            <span class="category-emoji">📝</span>
-            <span>Stationery</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('bags')">
-            <span class="category-emoji">👜</span>
-            <span>Bags</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('books')">
-            <span class="category-emoji">📚</span>
-            <span>Books</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('gadgets')">
-            <span class="category-emoji">🎧</span>
-            <span>Gadgets</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('student-accessories')">
-            <span class="category-emoji">🎒</span>
-            <span>Accessories</span>
-          </div>
-          <div class="category-chip" onclick="filterByCategory('daily-essentials')">
-            <span class="category-emoji">🛍️</span>
-            <span>Essentials</span>
-          </div>
+          <div class="category-chip" onclick="filterByCategory('laptops')"><span class="chip-emoji">💻</span><span>Laptops</span></div>
+          <div class="category-chip" onclick="filterByCategory('keyboards')"><span class="chip-emoji">⌨️</span><span>Keyboards</span></div>
+          <div class="category-chip" onclick="filterByCategory('mouse')"><span class="chip-emoji">🖱️</span><span>Mouse</span></div>
+          <div class="category-chip" onclick="filterByCategory('stationery')"><span class="chip-emoji">📝</span><span>Stationery</span></div>
+          <div class="category-chip" onclick="filterByCategory('bags')"><span class="chip-emoji">👜</span><span>Bags</span></div>
+          <div class="category-chip" onclick="filterByCategory('books')"><span class="chip-emoji">📚</span><span>Books</span></div>
+          <div class="category-chip" onclick="filterByCategory('gadgets')"><span class="chip-emoji">🎧</span><span>Gadgets</span></div>
+          <div class="category-chip" onclick="filterByCategory('student-accessories')"><span class="chip-emoji">🎒</span><span>Accessories</span></div>
+          <div class="category-chip" onclick="filterByCategory('daily-essentials')"><span class="chip-emoji">🛍️</span><span>Essentials</span></div>
         </div>
       </div>
     </section>
@@ -162,62 +313,62 @@
     <div class="container main-container">
       <!-- Featured Products Section -->
       <section id="products" class="products-section">
-        <h2>Featured Products</h2>
+        <div class="section-header">
+          <h2>Featured Products</h2>
+          <p>Hand-picked just for you</p>
+        </div>
         <div id="products-list" class="products-grid">
           <!-- Products will be loaded here dynamically -->
-        </div>
-      </section>
-
-      <!-- Related Products Section -->
-      <section id="related-products" class="related-products-section" style="display: none;">
-        <h2>Related Products</h2>
-        <div class="related-products-container">
-          <div class="related-product-left">
-            <div id="related-left-product" class="related-product-card">
-              <!-- Left product will be loaded here -->
-            </div>
-          </div>
-          <div class="related-products-center">
-            <p>Browse our curated collection of related items</p>
-          </div>
-          <div class="related-product-right">
-            <div id="related-right-product" class="related-product-card">
-              <!-- Right product will be loaded here -->
-            </div>
-          </div>
         </div>
       </section>
 
       <!-- AI Recommendations Section -->
       <section id="ai-recommendations" class="ai-recommendations-section" style="display: none;">
         <div class="recommendations-header">
-          <h2>✨ AI Recommendations For You</h2>
-          <p>Based on your order history</p>
+          <div class="section-header">
+            <h2>✨ AI Recommendations For You</h2>
+            <p>Based on your order history</p>
+          </div>
         </div>
         <div id="recommendations-list" class="recommendations-grid">
           <!-- Recommendations will be loaded here dynamically -->
         </div>
       </section>
+
+      <!-- Related Products Section -->
+      <section id="related-products" class="related-products-section" style="display: none;">
+        <div class="section-header">
+          <h2>You May Also Like</h2>
+          <p>Products picked for you</p>
+        </div>
+        <div id="related-products-grid" class="related-products-grid">
+          <!-- Related products will be loaded here dynamically -->
+        </div>
+      </section>
     </div>
   </main>
 
-  <!-- Additional Sections (Cart, Order Summary, Order History) -->
+  <!-- ============ ADDITIONAL SECTIONS ============ -->
   <div class="container main-container">
     <!-- Cart Section -->
     <section id="cart" class="cart-section" style="display: none;">
-      <h2>Shopping Cart</h2>
+      <div class="section-header">
+        <h2>🛒 Shopping Cart</h2>
+      </div>
       <div id="cart-items" class="cart-items">
         <!-- Cart items will be loaded here dynamically -->
       </div>
       <div class="cart-summary">
         <h3>Total: ₹<span id="cart-total">0.00</span></h3>
-        <button onclick="checkout()">Checkout</button>
+        <button onclick="checkout()">Proceed to Checkout</button>
       </div>
     </section>
 
     <!-- Order Summary Section -->
     <section id="order-summary" class="order-summary-section" style="display: none;">
-      <h2>Order Summary</h2>
+      <div class="section-header">
+        <h2>📋 Order Summary</h2>
+      </div>
       <div class="order-container">
         <!-- Order Details -->
         <div class="order-details">
@@ -225,7 +376,7 @@
           <div id="summary-items" class="summary-items">
             <!-- Items will be displayed here -->
           </div>
-          
+
           <div class="pricing-breakdown">
             <div class="price-row">
               <span>Subtotal:</span>
@@ -249,12 +400,10 @@
         <!-- Checkout Form -->
         <div class="checkout-form">
           <h3>Delivery & Payment</h3>
-          
           <div class="form-group">
             <label for="shipping-address">Shipping Address:</label>
             <textarea id="shipping-address" placeholder="Enter your complete address" rows="3"></textarea>
           </div>
-
           <div class="form-group">
             <label for="payment-method">Payment Method:</label>
             <select id="payment-method">
@@ -265,7 +414,6 @@
               <option value="wallet">Digital Wallet</option>
             </select>
           </div>
-
           <div class="form-actions">
             <button onclick="confirmOrder()" class="btn-confirm">Confirm Order</button>
             <button onclick="backToCart()" class="btn-back">Back to Cart</button>
@@ -276,27 +424,78 @@
 
     <!-- Order History Section -->
     <section id="order-history" class="order-history-section" style="display: none;">
-      <h2>Order History</h2>
+      <div class="section-header">
+        <h2>📦 Order History</h2>
+      </div>
       <div id="orders-container" class="orders-container">
         <!-- Orders will be loaded here -->
       </div>
     </section>
   </div>
 
-  <!-- Footer -->
+  <!-- ============ PRODUCT DETAIL MODAL ============ -->
+  <div id="product-detail-modal" class="product-modal-overlay" onclick="closeProductModal(event)">
+    <div class="product-modal" onclick="event.stopPropagation()">
+      <button class="product-modal-close" onclick="closeProductDetail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="product-modal-body">
+        <div class="product-modal-image" id="modal-product-image">
+          📦
+        </div>
+        <div class="product-modal-info">
+          <span class="product-modal-category" id="modal-product-category">Category</span>
+          <h2 class="product-modal-name" id="modal-product-name">Product Name</h2>
+          <div class="product-modal-rating" id="modal-product-rating">★★★★☆</div>
+          <div class="product-modal-price" id="modal-product-price">₹0.00</div>
+          <div class="product-modal-stock" id="modal-product-stock"></div>
+          <p class="product-modal-desc" id="modal-product-desc">Product description will appear here.</p>
+          <div class="product-modal-actions">
+            <button class="btn-modal-cart" id="modal-add-cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Add to Cart
+            </button>
+            <button class="btn-modal-close" onclick="closeProductDetail()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <div class="footer-section">
-          <h3>QuickPick</h3>
-          <p>Your one-stop shop for everything you need</p>
+        <div class="footer-section footer-brand">
+          <h3><span class="brand-icon">⚡</span>Quick<span class="brand-accent">Pick</span></h3>
+          <p>Your one-stop shop for everything you need. Premium quality products, unbeatable prices, and lightning-fast delivery.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
         </div>
         <div class="footer-section">
           <h4>Quick Links</h4>
           <ul>
             <li><a href="#" onclick="goHome()">Home</a></li>
             <li><a href="#" onclick="goToProducts()">Products</a></li>
-            <li><a href="#" onclick="viewOrderHistory()">Orders</a></li>
+            <li><a href="#" onclick="viewOrderHistory()">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="#" onclick="filterByCategory('laptops')">Laptops</a></li>
+            <li><a href="#" onclick="filterByCategory('gadgets')">Gadgets</a></li>
+            <li><a href="#" onclick="filterByCategory('books')">Books</a></li>
+            <li><a href="#" onclick="filterByCategory('bags')">Bags</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -304,12 +503,13 @@
           <ul>
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">Help & FAQs</a></li>
+            <li><a href="#">Shipping Policy</a></li>
             <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 QuickPick. All rights reserved.</p>
+        <p>&copy; 2025 QuickPick. All rights reserved. Built with ❤️</p>
       </div>
     </div>
   </footer>
